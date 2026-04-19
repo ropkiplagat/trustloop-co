@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenya Credit Intelligence Blog | TrustLoop Africa</title>
+  <meta name="description" content="Research, benchmarks, and practical guides on SACCO credit scoring, M-Pesa analysis, and loan portfolio management in Kenya. Written for finance professionals.">
+  <meta property="og:title" content="Kenya Credit Intelligence Blog | TrustLoop Africa">
+  <meta property="og:url" content="https://trustloopafrica.com/blog">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://trustloopafrica.com/blog">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TrustLoop Africa","url":"https://trustloopafrica.com","logo":"https://trustloopafrica.com/assets/logo.svg"}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <a href="index.html"><img src="assets/logo.svg" alt="TrustLoop Africa" height="40"></a>
+  </div>
+  <div class="nav-links">
+    <a href="for-saccos.html" class="hide-mob">For SACCOs</a>
+    <a href="for-lenders.html" class="hide-mob">For Lenders</a>
+    <a href="pricing.html" class="hide-mob">Pricing</a>
+    <a href="about.html" class="hide-mob">About</a>
+    <a href="contact.html" class="nav-cta">Book Demo</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="for-saccos.html" onclick="closeMobileNav()">For SACCOs</a>
+  <a href="for-lenders.html" onclick="closeMobileNav()">For Lenders</a>
+  <a href="how-it-works.html" onclick="closeMobileNav()">How It Works</a>
+  <a href="pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <a href="contact.html" class="nav-cta" onclick="closeMobileNav()">Book Demo →</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-badge fade-up"><span class="dot"></span>Kenya Credit Intelligence</div>
+    <h1 class="fade-up">The <span>Credit Intelligence</span> Blog</h1>
+    <p class="sub fade-up">Research, benchmarks, and practical guides on SACCO credit scoring, M-Pesa analysis, and loan portfolio management — written for Kenya's financial professionals.</p>
+  </div>
+</section>
+
+<!-- LEAD MAGNET FEATURED -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="fade-up" style="background:var(--surface2);border:1px solid var(--primary);border-radius:var(--radius-lg);padding:40px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;">
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--primary);margin-bottom:12px;">📄 Free Research Report</div>
+        <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;color:var(--white);margin-bottom:12px;letter-spacing:-.02em;">Kenya SACCO Default Rate Benchmark Report 2026</h2>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px;">NPL benchmarks by SACCO size, county, and credit method. The M-Pesa blind spot. 5-step default reduction checklist. How one Nairobi SACCO cut NPLs by 43%.</p>
+        <a href="contact.html" class="btn-primary" style="font-size:14px;padding:12px 24px;">Download Free Report →</a>
+      </div>
+      <div style="text-align:center;padding:20px;" class="hide-mob">
+        <div style="font-size:64px;">📊</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;">12-page PDF · Free</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG POSTS -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-label fade-up">Latest Articles</div>
+    <h2 class="section-title fade-up">Kenya Credit Intelligence</h2>
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <h2 class="section-title fade-up">Topics</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;" class="fade-up">
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">SACCO Management</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">M-Pesa Credit Scoring</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">Loan Portfolio Health</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">Kenya Fintech</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">NPL Reduction</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">Digital Lending</span>
+      <span style="background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--muted);">SASRA Compliance</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="cta-banner fade-up">
+      <h2>Get New Research in Your Inbox</h2>
+      <p>Monthly benchmarks, SACCO management guides, and Kenya fintech news. No spam — unsubscribe anytime.</p>
+      <div class="ctas">
+        <a href="contact.html" class="btn-primary">Subscribe Free →</a>
+        <a href="for-saccos.html" class="btn-ghost">For SACCOs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <img src="assets/logo.svg" alt="TrustLoop Africa" height="36">
+        <div class="footer-tagline">M-Pesa Credit Intelligence · Powered by SpinMobile</div>
+      </div>
+      <div class="footer-links">
+        <a href="for-saccos.html">For SACCOs</a>
+        <a href="for-lenders.html">For Lenders</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TrustLoop Africa. All rights reserved.</span>
+      <div class="footer-compliance"><span>🔒 CBK Compliant</span><span>256-bit TLS</span><span>SASRA Ready</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const posts = [
+  { tag: 'Research', title: 'Kenya SACCO Default Rate Benchmark 2026: Key Findings', excerpt: 'The average Kenyan SACCO NPL rate hit 6.8% in 2025. Here\'s how it breaks down by county, SACCO size, and credit review method — and what it means for your portfolio.', date: 'April 2026' },
+  { tag: 'Guide', title: 'How to Read an M-Pesa Statement for Credit Risk', excerpt: 'A loan officer\'s practical guide to the 5 signals hidden in every M-Pesa PDF that predict whether a borrower will repay — before any software does it for you.', date: 'April 2026' },
+  { tag: 'Compliance', title: 'SASRA\'s 2026 Credit Risk Guidelines: What SACCOs Need to Know', excerpt: 'The Sacco Societies Regulatory Authority updated its credit risk management guidelines. Here\'s what changed and how TrustLoop helps you stay compliant.', date: 'March 2026' },
+  { tag: 'Case Study', title: 'How a Nairobi SACCO Cut Its NPL Rate From 8% to 4% in 90 Days', excerpt: 'A co-op with 1,200 members was watching 8% of its loan book go bad. By adding M-Pesa credit scoring to its process, it halved that rate in a single quarter.', date: 'March 2026' },
+  { tag: 'Fintech', title: 'Why 60% of Kenya\'s Best Borrowers Are Invisible to Credit Bureaus', excerpt: 'Informal workers, self-employed traders, and gig economy earners have rich financial histories — just not in the databases bureaus check. Here\'s the real picture.', date: 'February 2026' },
+  { tag: 'Product', title: 'TrustScore 47™: The 47 M-Pesa Signals That Predict Loan Repayment', excerpt: 'An inside look at how the M-Pesa Intelligence Engine groups 47 transaction signals into 4 weighted dimensions to produce a score from 300–850.', date: 'February 2026' },
+];
+const grid = document.getElementById('blogGrid');
+grid.innerHTML = posts.map(p => `
+  <div class="blog-card fade-up">
+    <div class="blog-card-body">
+      <div class="blog-tag">${p.tag}</div>
+      <h3>${p.title}</h3>
+      <p>${p.excerpt}</p>
+      <div class="blog-meta">${p.date} · TrustLoop Africa</div>
+    </div>
+  </div>`).join('');
+const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 1500);
+function toggleMobileNav() { document.getElementById('navHamburger').classList.toggle('open'); document.getElementById('navMobileMenu').classList.toggle('open'); }
+function closeMobileNav() { document.getElementById('navHamburger').classList.remove('open'); document.getElementById('navMobileMenu').classList.remove('open'); }
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMobileMenu'); const btn = document.getElementById('navHamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileNav();
+});
+</script>
+</body>
+</html>

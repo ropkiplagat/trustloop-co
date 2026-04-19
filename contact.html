@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a TrustLoop Demo — Live Credit Scoring in 20 Minutes</title>
+  <meta name="description" content="See the M-Pesa Intelligence Engine score a real application live. Book a 20-minute demo with Abraham Korir. No slides. Bring a real loan application if you have one.">
+  <meta property="og:title" content="Book a TrustLoop Demo — Live Credit Scoring in 20 Minutes">
+  <meta property="og:url" content="https://trustloopafrica.com/contact">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://trustloopafrica.com/contact">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TrustLoop Africa","url":"https://trustloopafrica.com","logo":"https://trustloopafrica.com/assets/logo.svg","contactPoint":{"@type":"ContactPoint","contactType":"Sales","availableLanguage":["English","Swahili"]}}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <a href="index.html"><img src="assets/logo.svg" alt="TrustLoop Africa" height="40"></a>
+  </div>
+  <div class="nav-links">
+    <a href="for-saccos.html" class="hide-mob">For SACCOs</a>
+    <a href="for-lenders.html" class="hide-mob">For Lenders</a>
+    <a href="pricing.html" class="hide-mob">Pricing</a>
+    <a href="about.html" class="hide-mob">About</a>
+    <a href="contact.html" class="nav-cta" style="background:var(--primary-dk);">Book Demo</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="for-saccos.html" onclick="closeMobileNav()">For SACCOs</a>
+  <a href="for-lenders.html" onclick="closeMobileNav()">For Lenders</a>
+  <a href="how-it-works.html" onclick="closeMobileNav()">How It Works</a>
+  <a href="pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <a href="contact.html" class="nav-cta" onclick="closeMobileNav()">Book Demo →</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-badge fade-up"><span class="dot"></span>No slides · No fluff · 20 minutes</div>
+    <h1 class="fade-up">See <span>TrustLoop in Action</span><br>— Live Demo</h1>
+    <p class="sub fade-up">Abraham will walk you through a real score on a real M-Pesa statement. You can bring your own. You'll leave knowing exactly whether TrustLoop is right for your SACCO.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="section" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="split-section">
+      <!-- FORM -->
+      <div class="fade-up">
+        <div class="form-card">
+          <div class="form-title">Book Your Demo</div>
+          <div class="form-sub" style="margin-bottom:24px;">We'll reply within 2 hours via WhatsApp or email.</div>
+          <form id="contactForm">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="cName" placeholder="e.g. Jane Wanjiku" required>
+            </div>
+            <div class="form-group">
+              <label>Organisation / SACCO Name</label>
+              <input type="text" id="cOrg" placeholder="e.g. Nairobi Teachers SACCO" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone (WhatsApp)</label>
+                <input type="tel" id="cPhone" placeholder="07XX XXX XXX" required>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="cEmail" placeholder="you@sacco.co.ke">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>What best describes you?</label>
+              <select id="cType">
+                <option value="">Select one…</option>
+                <option>SACCO Manager / CEO</option>
+                <option>Loans Officer</option>
+                <option>Digital Lender / Fintech</option>
+                <option>MFI / NGO</option>
+                <option>Bank / Financial Institution</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Anything you'd like us to know?</label>
+              <textarea id="cMsg" rows="3" placeholder="e.g. We have 2,000 members and our NPL rate is around 7%…" style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn" style="width:100%;margin-top:8px;">Book Demo via WhatsApp →</button>
+          </form>
+          <div id="successMsg" style="display:none;text-align:center;padding:32px 0;">
+            <div style="font-size:40px;margin-bottom:12px;">✅</div>
+            <div style="font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px;">Request sent!</div>
+            <div style="font-size:13px;color:var(--muted);">Abraham will reach out on WhatsApp within 2 hours.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHAT TO EXPECT + CONTACT -->
+      <div>
+        <div class="fade-up" style="margin-bottom:32px;">
+          <div class="section-label">What to Expect</div>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-top:20px;">
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--primary-glow);border:1px solid #00c85340;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--primary);flex-shrink:0;">1</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;">Live Scoring Demo</div>
+                <div style="font-size:13px;color:var(--muted);">Abraham scores a real M-Pesa statement live — you can bring your own application.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--primary-glow);border:1px solid #00c85340;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--primary);flex-shrink:0;">2</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;">Dashboard Walkthrough</div>
+                <div style="font-size:13px;color:var(--muted);">See your application list, score history, export, and SASRA audit features.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--primary-glow);border:1px solid #00c85340;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--primary);flex-shrink:0;">3</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px;">Pricing & Fit Discussion</div>
+                <div style="font-size:13px;color:var(--muted);">We'll tell you honestly if TrustLoop is the right fit — no pressure, no hard sell.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;">
+          <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:16px;">Other Ways to Reach Us</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <a href="https://wa.me/254712000000" style="display:flex;gap:12px;align-items:center;color:var(--text);text-decoration:none;">
+              <div style="width:40px;height:40px;background:var(--primary-glow);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">💬</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;">WhatsApp (Fastest)</div>
+                <div style="font-size:12px;color:var(--muted);">Reply within 2 hours</div>
+              </div>
+            </a>
+            <a href="mailto:hello@trustloopafrica.com" style="display:flex;gap:12px;align-items:center;color:var(--text);text-decoration:none;">
+              <div style="width:40px;height:40px;background:var(--primary-glow);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">✉️</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;">Email</div>
+                <div style="font-size:12px;color:var(--muted);">hello@trustloopafrica.com</div>
+              </div>
+            </a>
+            <div style="display:flex;gap:12px;align-items:center;">
+              <div style="width:40px;height:40px;background:var(--primary-glow);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">📍</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;">Nairobi, Kenya</div>
+                <div style="font-size:12px;color:var(--muted);">In-person demos available</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <img src="assets/logo.svg" alt="TrustLoop Africa" height="36">
+        <div class="footer-tagline">M-Pesa Credit Intelligence · Powered by SpinMobile</div>
+      </div>
+      <div class="footer-links">
+        <a href="for-saccos.html">For SACCOs</a>
+        <a href="for-lenders.html">For Lenders</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TrustLoop Africa. All rights reserved.</span>
+      <div class="footer-compliance"><span>🔒 CBK Compliant</span><span>256-bit TLS</span><span>SASRA Ready</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('cName').value.trim();
+  const org  = document.getElementById('cOrg').value.trim();
+  const phone = document.getElementById('cPhone').value.trim();
+  const type = document.getElementById('cType').value;
+  const msg  = document.getElementById('cMsg').value.trim();
+  if (!name || !org || !phone) { alert('Please fill in your name, organisation, and phone number.'); return; }
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  const waMsg = encodeURIComponent(`Hi Abraham, I'd like to book a TrustLoop demo.\n\nName: ${name}\nOrganisation: ${org}\nType: ${type || 'Not specified'}\n${msg ? 'Notes: ' + msg : ''}`);
+  setTimeout(() => {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    window.open(`https://wa.me/254712000000?text=${waMsg}`, '_blank');
+  }, 600);
+});
+const io = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 1500);
+function toggleMobileNav() { document.getElementById('navHamburger').classList.toggle('open'); document.getElementById('navMobileMenu').classList.toggle('open'); }
+function closeMobileNav() { document.getElementById('navHamburger').classList.remove('open'); document.getElementById('navMobileMenu').classList.remove('open'); }
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMobileMenu'); const btn = document.getElementById('navHamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileNav();
+});
+</script>
+</body>
+</html>

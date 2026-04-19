@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M-Pesa Credit Score API for Digital Lenders Kenya | TrustLoop</title>
+  <meta name="description" content="TrustScore 47™ API integrates with your LMS in one day. Score thin-file Kenyan borrowers in 30 seconds using 47 M-Pesa signals. Reduce defaults, increase approvals.">
+  <meta property="og:title" content="M-Pesa Credit Score API for Digital Lenders Kenya | TrustLoop">
+  <meta property="og:description" content="Score thin-file Kenyan borrowers in 30 seconds. REST API. Integrates with any LMS in one day.">
+  <meta property="og:url" content="https://trustloopafrica.com/for-lenders">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://trustloopafrica.com/for-lenders">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+  .code-block {
+    background: #060d08;
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #00c853;
+    overflow-x: auto;
+    margin-top: 16px;
+  }
+  .code-block .cm { color: var(--muted2); }
+  .code-block .cs { color: #a8e6bc; }
+  .code-block .cn { color: var(--warn); }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"TrustLoop Africa","url":"https://trustloopafrica.com","logo":"https://trustloopafrica.com/assets/logo.svg","description":"AI credit scoring platform for Kenya's SACCOs and digital lenders.","address":{"@type":"PostalAddress","addressLocality":"Nairobi","addressCountry":"KE"}}</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <a href="index.html"><img src="assets/logo.svg" alt="TrustLoop Africa" height="40"></a>
+  </div>
+  <div class="nav-links">
+    <a href="for-saccos.html" class="hide-mob">For SACCOs</a>
+    <a href="for-lenders.html" class="hide-mob" style="color:var(--primary);">For Lenders</a>
+    <a href="pricing.html" class="hide-mob">Pricing</a>
+    <a href="about.html" class="hide-mob">About</a>
+    <a href="contact.html" class="nav-cta">Book Demo</a>
+  </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="for-saccos.html" onclick="closeMobileNav()">For SACCOs</a>
+  <a href="for-lenders.html" onclick="closeMobileNav()">For Lenders</a>
+  <a href="how-it-works.html" onclick="closeMobileNav()">How It Works</a>
+  <a href="pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <a href="contact.html" class="nav-cta" onclick="closeMobileNav()">Book Demo →</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-badge fade-up"><span class="dot"></span>TrustScore 47™ API</div>
+    <h1 class="fade-up">Stop Rejecting <span>Good Borrowers.</span><br>Stop Approving Bad Ones.</h1>
+    <p class="sub fade-up">60% of Kenya's borrowers have zero CRB history. TrustLoop fills that gap using 47 M-Pesa signals — income regularity, cash flow, Fuliza behaviour, bill payment patterns, and more.</p>
+    <div class="ctas fade-up">
+      <a href="contact.html" class="btn-primary">Request API Access →</a>
+      <a href="how-it-works.html" class="btn-ghost">View Methodology</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="metrics">
+  <div class="metrics-inner">
+    <div class="fade-up">
+      <div class="metric-num">&lt;30s</div>
+      <div class="metric-label">Score response time</div>
+    </div>
+    <div class="fade-up">
+      <div class="metric-num">1 day</div>
+      <div class="metric-label">LMS integration time</div>
+    </div>
+    <div class="fade-up">
+      <div class="metric-num">60%</div>
+      <div class="metric-label">Borrowers bureaus miss</div>
+    </div>
+    <div class="fade-up">
+      <div class="metric-num">REST</div>
+      <div class="metric-label">API with webhooks</div>
+    </div>
+  </div>
+</section>
+
+<!-- API OVERVIEW -->
+<section class="section">
+  <div class="section-inner">
+    <div class="split-section">
+      <div class="split-text fade-up">
+        <div class="section-label">The TrustScore 47™ API</div>
+        <h2>Integrate in One Day. Score in 30 Seconds.</h2>
+        <p>A single REST endpoint. Submit an M-Pesa statement, get back a score, rating, recommendation, and 5 key signal factors — all in under 30 seconds.</p>
+        <p>Works with any LMS, loan origination system, or custom-built platform. JSON in, JSON out.</p>
+        <ul style="list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--primary);font-weight:700;">✓</span> Returns: score (300–850), rating, recommendation, 5 key factors</li>
+          <li style="display:flex;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--primary);font-weight:700;">✓</span> Webhook support for async scoring</li>
+          <li style="display:flex;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--primary);font-weight:700;">✓</span> Full API key authentication</li>
+          <li style="display:flex;gap:12px;font-size:14px;color:var(--muted);"><span style="color:var(--primary);font-weight:700;">✓</span> Rate limit: 1,000 scores/day on Growth plan</li>
+        </ul>
+      </div>
+      <div class="fade-up">
+        <div class="code-block">
+<span class="cm">// POST /api/apply</span><br>
+{<br>
+&nbsp;&nbsp;<span class="cs">"full_name"</span>: <span class="cn">"Jane Wanjiku"</span>,<br>
+&nbsp;&nbsp;<span class="cs">"phone"</span>: <span class="cn">"0712345678"</span>,<br>
+&nbsp;&nbsp;<span class="cs">"loan_amount"</span>: <span class="cn">150000</span>,<br>
+&nbsp;&nbsp;<span class="cs">"mpesa_pdf"</span>: <span class="cn">"[base64]"</span><br>
+}<br><br>
+<span class="cm">// Response — 200 OK</span><br>
+{<br>
+&nbsp;&nbsp;<span class="cs">"ref"</span>: <span class="cn">"TL-291847"</span>,<br>
+&nbsp;&nbsp;<span class="cs">"score"</span>: <span class="cn">712</span>,<br>
+&nbsp;&nbsp;<span class="cs">"rating"</span>: <span class="cn">"Good"</span>,<br>
+&nbsp;&nbsp;<span class="cs">"recommendation"</span>: <span class="cn">"Approved"</span>,<br>
+&nbsp;&nbsp;<span class="cs">"status"</span>: <span class="cn">"complete"</span><br>
+}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 47 SIGNALS -->
+<section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-label fade-up">What We Analyse</div>
+    <h2 class="section-title fade-up">The 47 M-Pesa Signals</h2>
+    <p class="section-sub fade-up">Grouped into 4 dimensions — each weighted to reflect real Kenyan borrower behaviour.</p>
+    <div class="signal-grid" style="margin-top:40px;">
+      <div class="signal-pill fade-up"><strong>Payment History (35%)</strong>Loan repayment timing, M-Shwari repayments, Fuliza clearance frequency</div>
+      <div class="signal-pill fade-up"><strong>Income Flow (30%)</strong>Salary regularity, business income patterns, M-Pesa receive frequency</div>
+      <div class="signal-pill fade-up"><strong>Credit Utilisation (20%)</strong>Fuliza usage ratio, overdraft frequency, net cash position trends</div>
+      <div class="signal-pill fade-up"><strong>Loan-to-Income (15%)</strong>Requested amount vs. average monthly inflow, affordability ratio</div>
+      <div class="signal-pill fade-up"><strong>Transaction Depth</strong>6-month history minimum, 12-month preferred</div>
+      <div class="signal-pill fade-up"><strong>Bill Payments</strong>KPLC, Nairobi Water, school fees consistency</div>
+      <div class="signal-pill fade-up"><strong>M-Shwari Behaviour</strong>Save & borrow history, lock savings patterns</div>
+      <div class="signal-pill fade-up"><strong>Spend Regularity</strong>Food, transport, airtime patterns — stability indicators</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label fade-up">For Builders</div>
+    <h2 class="section-title fade-up">Everything You Need to Ship Fast</h2>
+    <div class="feature-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">⚡</div>
+        <h3>One-Day Integration</h3>
+        <p>Simple REST API with comprehensive documentation. Most teams are in production within 4 hours.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h3>Explainable Scores</h3>
+        <p>Returns 5 key signal factors with each score — not a black box. Your risk team can explain every decision.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔔</div>
+        <h3>Webhook Callbacks</h3>
+        <p>For async workflows — submit and get notified when the score is ready. No polling required.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📈</div>
+        <h3>Portfolio Dashboard</h3>
+        <p>Monitor all scored applications, track approval rates, and export data — included with every plan.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🔑</div>
+        <h3>API Key Auth</h3>
+        <p>Simple bearer token authentication. Rate limits, usage metrics, and key rotation via dashboard.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon">🇰🇪</div>
+        <h3>Kenya-First Model</h3>
+        <p>Trained on Kenyan M-Pesa behaviour — not adapted from a Western credit model. Purpose-built for this market.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="cta-banner fade-up">
+      <h2>Ready to Score Kenya's Thin-File Borrowers?</h2>
+      <p>Request API access and we'll get you into a pilot within 48 hours. Bring your LMS — we'll handle the integration.</p>
+      <div class="ctas">
+        <a href="contact.html" class="btn-primary">Request a Pilot →</a>
+        <a href="pricing.html" class="btn-ghost">View API Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <img src="assets/logo.svg" alt="TrustLoop Africa" height="36">
+        <div class="footer-tagline">M-Pesa Credit Intelligence · Powered by SpinMobile</div>
+      </div>
+      <div class="footer-links">
+        <a href="for-saccos.html">For SACCOs</a>
+        <a href="for-lenders.html">For Lenders</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TrustLoop Africa. All rights reserved.</span>
+      <div class="footer-compliance"><span>🔒 CBK Compliant</span><span>256-bit TLS</span><span>SASRA Ready</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+setTimeout(() => { document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 1500);
+function toggleMobileNav() { document.getElementById('navHamburger').classList.toggle('open'); document.getElementById('navMobileMenu').classList.toggle('open'); }
+function closeMobileNav() { document.getElementById('navHamburger').classList.remove('open'); document.getElementById('navMobileMenu').classList.remove('open'); }
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMobileMenu'); const btn = document.getElementById('navHamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) closeMobileNav();
+});
+</script>
+</body>
+</html>
