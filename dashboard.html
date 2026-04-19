@@ -184,7 +184,8 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     table {
       width: 100%;
@@ -453,6 +454,34 @@
       .table-controls { flex-direction: column; align-items: stretch; }
       .search-box { max-width: none; }
     }
+    @media (max-width: 480px) {
+      /* Sidebar collapses fully — bottom icon bar */
+      .sidebar { width: 0; overflow: hidden; padding: 0; }
+      .dash-main { margin-left: 0; padding: 8px 10px 70px; }
+      .dash-bottom-bar {
+        display: flex !important;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--bg2);
+        border-top: 1px solid var(--border);
+        z-index: 90;
+        padding: 6px 0;
+      }
+      .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+      table { font-size: 12px; min-width: 620px; }
+      thead th, tbody td { padding: 10px 12px; }
+      .form-group input, .form-group select { font-size: 16px; min-height: 44px; }
+    }
+    .dash-bottom-bar { display: none; }
+    .dash-bottom-bar a {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      color: var(--muted); font-size: 10px; font-weight: 600;
+      text-decoration: none; padding: 6px 4px;
+      text-transform: uppercase; letter-spacing: .4px;
+    }
+    .dash-bottom-bar a.active { color: var(--primary); }
+    .dash-bottom-bar .bb-icon { font-size: 20px; }
   </style>
 </head>
 <body>
@@ -981,5 +1010,21 @@ function showToast(msg) {
 // ── Init ──
 loadApplications();
 </script>
+
+<!-- Mobile bottom navigation bar (visible only at ≤480px) -->
+<nav class="dash-bottom-bar">
+  <a class="active" onclick="setView('applications')">
+    <span class="bb-icon">&#x1F4CB;</span>Apps
+  </a>
+  <a onclick="setView('scores')">
+    <span class="bb-icon">&#x1F4CA;</span>Scores
+  </a>
+  <a onclick="setView('notifications')">
+    <span class="bb-icon">&#x1F514;</span>Alerts
+  </a>
+  <a href="index.html">
+    <span class="bb-icon">&#x1F3E0;</span>Site
+  </a>
+</nav>
 </body>
 </html>

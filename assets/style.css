@@ -502,9 +502,84 @@ a:hover { text-decoration: underline; }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast-icon { color: var(--primary); font-weight: 700; margin-right: 8px; }
 
-/* ── Responsive ── */
+/* ── HAMBURGER ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all .3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(10,15,13,.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px 20px;
+  z-index: 98;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 13px 16px;
+  border-radius: var(--radius);
+  transition: background .2s, color .2s;
+  text-decoration: none;
+}
+.nav-mobile-menu a:hover { background: var(--surface); color: var(--text); }
+.nav-mobile-menu .nav-cta {
+  background: var(--primary);
+  color: #0a0f0d !important;
+  text-align: center;
+  font-weight: 700;
+  margin-top: 8px;
+  padding: 15px 16px;
+}
+
+/* ── STICKY MOBILE CTA ── */
+.mobile-apply-cta {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 16px 16px;
+  background: linear-gradient(to top, var(--bg) 70%, transparent);
+  z-index: 50;
+  pointer-events: none;
+}
+.mobile-apply-cta .btn-primary {
+  width: 100%;
+  justify-content: center;
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  pointer-events: all;
+  box-shadow: 0 4px 24px #00c85350;
+}
+
+/* ── Responsive — Tablet ── */
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero { padding: 96px 24px 64px; }
   .hero h1 { font-size: 2rem; }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
@@ -512,13 +587,62 @@ a:hover { text-decoration: underline; }
   .nav-links .hide-mob { display: none; }
   .footer-top { flex-direction: column; gap: 24px; }
 }
-@media (max-width: 600px) {
+
+/* ── Responsive — Mobile ── */
+@media (max-width: 768px) {
+  /* Nav → hamburger */
+  .nav-hamburger { display: flex; }
+  .nav-links { display: none; }
+
+  /* Touch-friendly inputs — font-size 16px prevents iOS zoom */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 13px 14px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  .btn-next, .btn-back, .btn-submit {
+    padding: 14px;
+    min-height: 48px;
+    font-size: 15px;
+  }
+  .btn-primary { padding: 14px 24px; min-height: 48px; }
+
+  /* Form card */
+  .form-card { padding: 24px 18px; }
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Upload zone bigger tap target */
+  .upload-zone { padding: 28px 16px; }
+  .upload-icon { font-size: 36px; }
+
+  /* Hero room for sticky CTA */
+  .hero { padding-bottom: 100px; }
+  .mobile-apply-cta { display: block; }
+
+  /* Sections */
+  .section { padding: 56px 20px; }
   .nav { padding: 0 16px; }
   .steps-grid { grid-template-columns: 1fr; }
   .steps-grid::before { display: none; }
-  .metrics-inner { grid-template-columns: repeat(2, 1fr); }
-  .form-row { grid-template-columns: 1fr; }
-  .section { padding: 56px 20px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .hero-stats { gap: 20px; }
+}
+
+/* ── Responsive — Small phones ── */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.75rem; }
+  .hero-sub { font-size: 15px; }
+  .hero-stats { gap: 16px; flex-wrap: wrap; }
+  .stat-num { font-size: 22px; }
+  .stat-label { font-size: 11px; }
+  .form-title { font-size: 16px; }
+  .step-label { font-size: 9px; }
+  .section-title { font-size: 1.4rem; }
+  .section-sub { font-size: 14px; }
+  .metrics-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .metric-num { font-size: 1.8rem; }
+  .metric-label { font-size: 12px; }
+  /* Toast above sticky CTA */
+  .toast { left: 16px; right: 16px; bottom: 80px; max-width: none; }
 }

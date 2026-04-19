@@ -126,7 +126,17 @@
     <a href="dashboard.html" class="hide-mob">Admin</a>
     <a href="#apply" class="nav-cta">Apply Now</a>
   </div>
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="#how" onclick="closeMobileNav()">How It Works</a>
+  <a href="#faq" onclick="closeMobileNav()">FAQ</a>
+  <a href="dashboard.html">Admin</a>
+  <a href="#apply" class="nav-cta" onclick="closeMobileNav()">Apply Now →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="apply">
@@ -691,6 +701,28 @@ function toggleFaq(i) {
   icon.style.transform = isOpen ? '' : 'rotate(45deg)';
   openFaq = isOpen ? null : i;
 }
+
+function toggleMobileNav() {
+  document.getElementById('navHamburger').classList.toggle('open');
+  document.getElementById('navMobileMenu').classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('navHamburger').classList.remove('open');
+  document.getElementById('navMobileMenu').classList.remove('open');
+}
+// Close mobile nav on outside click
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMobileMenu');
+  const btn   = document.getElementById('navHamburger');
+  if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+    closeMobileNav();
+  }
+});
 </script>
+
+<!-- Sticky mobile apply CTA -->
+<div class="mobile-apply-cta">
+  <a href="#apply" class="btn-primary" onclick="closeMobileNav()">Apply for Loan &rarr;</a>
+</div>
 </body>
 </html>
