@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustLoop — Your Credit Score</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    .score-page { flex: 1; padding: 80px 24px 64px; display: flex; align-items: center; justify-content: center; }
+    .score-container { max-width: 680px; width: 100%; }
+
+    /* Status header */
+    .result-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .result-ref {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .result-ref span { color: var(--primary); font-weight: 700; font-family: 'Courier New', monospace; }
+    .result-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    .result-status-badge.approved { background: #00c85318; color: var(--primary); border: 2px solid #00c85350; }
+    .result-status-badge.pending  { background: #ffab0018; color: var(--warn); border: 2px solid #ffab0050; }
+    .result-status-badge.rejected { background: #ff3b3b18; color: var(--danger); border: 2px solid #ff3b3b50; }
+
+    /* Gauge */
+    .gauge-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .gauge-svg { width: 280px; height: 160px; }
+    .gauge-num {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-top: -20px;
+      line-height: 1;
+    }
+    .gauge-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .gauge-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    /* Score card */
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .score-card-header {
+      background: var(--bg2);
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--muted);
+    }
+    .score-card-body { padding: 24px; }
+
+    /* Breakdown bars */
+    .breakdown-list { list-style: none; }
+    .breakdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .breakdown-item:last-child { margin-bottom: 0; }
+    .b-label { width: 130px; font-size: 13px; color: var(--text); flex-shrink: 0; }
+    .b-bar-wrap { flex: 1; height: 8px; background: var(--border2); border-radius: 4px; overflow: hidden; }
+    .b-bar { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(.22,.61,.36,1); }
+    .b-val { width: 32px; font-size: 13px; font-weight: 700; text-align: right; color: var(--text); }
+    .b-weight { width: 40px; font-size: 11px; color: var(--muted2); text-align: right; }
+
+    /* Factors */
+    .factor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .factor-item {
+      background: var(--bg2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      border-left: 3px solid;
+    }
+    .factor-item.pos { border-color: var(--primary); }
+    .factor-item.neg { border-color: var(--danger); }
+    .factor-item.neu { border-color: var(--warn); }
+    .factor-icon { font-size: 16px; margin-bottom: 6px; }
+    .factor-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .factor-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* Offer box */
+    .offer-box {
+      background: linear-gradient(135deg, #0f2b1b, #162019);
+      border: 1px solid #00c85340;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .offer-box::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #00c85320, transparent 70%);
+    }
+    .offer-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); margin-bottom: 8px; }
+    .offer-amount { font-size: 2.8rem; font-weight: 900; color: var(--white); margin-bottom: 4px; }
+    .offer-amount span { font-size: 1.4rem; color: var(--muted); font-weight: 400; }
+    .offer-rate { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .offer-meta { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; }
+    .offer-meta-item { text-align: center; }
+    .offer-meta-num { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .offer-meta-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .btn-accept {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #0a0f0d;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 16px 40px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-accept:hover { background: var(--primary-dk); transform: translateY(-2px); box-shadow: 0 8px 24px #00c85340; }
+
+    /* Share / Download */
+    .action-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 32px; }
+    .btn-action {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 10px 18px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+      font-family: inherit;
+    }
+    .btn-action:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Scale bar */
+    .scale-wrap { margin: 12px 0; }
+    .scale-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #ff3b3b 0%, #ffab00 40%, #00c853 100%);
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .scale-indicator {
+      position: absolute;
+      top: -4px;
+      width: 18px; height: 18px;
+      background: var(--white);
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      transform: translateX(-50%);
+      transition: left 1.5s cubic-bezier(.22,.61,.36,1);
+      box-shadow: 0 2px 8px #0006;
+    }
+    .scale-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted2); }
+
+    @media (max-width: 600px) {
+      .factor-grid { grid-template-columns: 1fr; }
+      .offer-meta { gap: 16px; }
+      .action-row { flex-wrap: wrap; }
+      .gauge-svg { width: 220px; height: 130px; }
+      .gauge-num { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Alert bar -->
+<div class="alert-bar">
+  🔒 Your score is generated by SpinMobile Credit Intelligence · <span>Encrypted & confidential</span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <a href="index.html"><img src="assets/logo.svg" alt="TrustLoop" height="40"></a>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="hide-mob" style="color:var(--muted);font-size:14px;">← New Application</a>
+    <a href="dashboard.html" class="nav-cta">Admin →</a>
+  </div>
+</nav>
+
+<main class="score-page">
+  <div class="score-container">
+
+    <!-- Loading state -->
+    <div id="loadingState" style="text-align:center;padding:60px 0;">
+      <div style="font-size:40px;animation:spin 1s linear infinite;display:inline-block;">⟳</div>
+      <div style="margin-top:16px;color:var(--muted);font-size:15px;">SpinMobile is analysing your M-Pesa data…</div>
+    </div>
+
+    <!-- Result (hidden until loaded) -->
+    <div id="resultState" style="display:none;">
+
+      <!-- Header -->
+      <div class="result-header fade-up">
+        <div class="result-ref">Application Reference: <span id="displayRef">TL-000000</span></div>
+        <div id="statusBadgeWrap"></div>
+        <div style="color:var(--muted);font-size:14px;" id="applicantName">Jane Wanjiku · Score generated 19 Apr 2026</div>
+      </div>
+
+      <!-- Gauge -->
+      <div class="gauge-wrap fade-up">
+        <svg class="gauge-svg" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#ff3b3b"/>
+              <stop offset="50%"  stop-color="#ffab00"/>
+              <stop offset="100%" stop-color="#00c853"/>
+            </linearGradient>
+          </defs>
+          <!-- Background arc -->
+          <path d="M 20 140 A 120 120 0 0 1 260 140" stroke="#1e3328" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <!-- Coloured arc -->
+          <path id="gaugeArc" d="M 20 140 A 120 120 0 0 1 260 140" stroke="url(#gaugeGrad)" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="0 10000"/>
+          <!-- Tick marks -->
+          <g id="gaugeTicks"></g>
+          <!-- Needle -->
+          <line id="gaugeNeedle" x1="140" y1="140" x2="140" y2="50" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" transform-origin="140 140" style="transform:rotate(-90deg);transition:transform 1.8s cubic-bezier(.22,.61,.36,1)"/>
+          <circle cx="140" cy="140" r="6" fill="var(--primary)"/>
+        </svg>
+
+        <div class="gauge-num" id="gaugeNumber">—</div>
+        <div class="gauge-label">SpinMobile Score · out of 850</div>
+        <div class="gauge-rating" id="gaugeRating">—</div>
+        <div class="scale-wrap" style="width:280px;">
+          <div class="scale-bar">
+            <div class="scale-indicator" id="scaleIndicator" style="left:50%"></div>
+          </div>
+          <div class="scale-labels">
+            <span>300 · Poor</span>
+            <span>580 · Fair</span>
+            <span>700 · Good</span>
+            <span>850 · Excellent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer box (approved only) -->
+      <div class="offer-box fade-up" id="offerBox" style="display:none;">
+        <div class="offer-label">🎉 Congratulations — You Qualify!</div>
+        <div class="offer-amount">KES <span id="offerAmount">—</span></div>
+        <div class="offer-rate" id="offerRate">at 11% p.a. · flexible repayment</div>
+        <div class="offer-meta">
+          <div class="offer-meta-item">
+            <div class="offer-meta-num" id="offerTenure">—</div>
+            <div class="offer-meta-label">Max Tenure</div>
+          </div>
+          <div class="offer-meta-item">
+            <div class="offer-meta-num" id="offerMonthly">—</div>
+            <div class="offer-meta-label">Est. Monthly</div>
+          </div>
+          <div class="offer-meta-item">
+            <div class="offer-meta-num" id="offerDisbursement">~4hrs</div>
+            <div class="offer-meta-label">Disbursement</div>
+          </div>
+        </div>
+        <button class="btn-accept" onclick="showToast('Loan acceptance coming in Phase 5!')">Accept Offer →</button>
+      </div>
+
+      <!-- Score Breakdown -->
+      <div class="score-card fade-up">
+        <div class="score-card-header">Score Breakdown</div>
+        <div class="score-card-body">
+          <ul class="breakdown-list" id="breakdownList"></ul>
+        </div>
+      </div>
+
+      <!-- Key Factors -->
+      <div class="score-card fade-up">
+        <div class="score-card-header">Key Factors Affecting Your Score</div>
+        <div class="score-card-body">
+          <div class="factor-grid" id="factorGrid"></div>
+        </div>
+      </div>
+
+      <!-- Action Row -->
+      <div class="action-row fade-up">
+        <button class="btn-action" onclick="window.print()">🖨 Print Report</button>
+        <button class="btn-action" onclick="downloadReport()">⬇ Download PDF</button>
+        <button class="btn-action" onclick="shareScore()">📤 Share</button>
+        <a class="btn-action" href="index.html">↩ New Application</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 TrustLoop Africa. Credit analysis powered by SpinMobile.</span>
+      <div class="footer-compliance">
+        <span>🔒 CBK Compliant</span>
+        <span>256-bit TLS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg">Done.</span>
+</div>
+
+<style>
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+
+<script>
+// ── Intersection Observer (skill rule) ──
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+}, 1500);
+
+// ── API base (Flask on DigitalOcean) ──
+const API_BASE = 'http://170.64.176.246/api';
+
+// ── Load score from API or fall back to sessionStorage ──
+async function getScore() {
+  const ref    = sessionStorage.getItem('tl_ref');
+  const name   = sessionStorage.getItem('tl_name')   || 'Applicant';
+  const amount = parseInt(sessionStorage.getItem('tl_amount')) || 75000;
+  if (ref) {
+    try {
+      const res  = await fetch(`${API_BASE}/score/${ref}`);
+      if (res.ok) {
+        const data = await res.json();
+        return { score: data.score || 712, ref: data.ref, name: data.full_name || name, amount };
+      }
+    } catch (err) {
+      console.warn('[Score] API unavailable:', err.message);
+    }
+  }
+  return { score: 712, ref: ref || 'TL-DEMO', name, amount };
+}
+
+function getRating(s) {
+  if (s >= 750) return { label: 'Excellent', color: 'var(--primary)', emoji: '🌟' };
+  if (s >= 700) return { label: 'Good',      color: 'var(--primary)', emoji: '✅' };
+  if (s >= 640) return { label: 'Fair',       color: 'var(--warn)',    emoji: '⚠️' };
+  if (s >= 580) return { label: 'Below Average', color: 'var(--warn)', emoji: '⚡' };
+  return { label: 'Poor', color: 'var(--danger)', emoji: '❌' };
+}
+
+function animateGauge(score) {
+  const pct     = (score - 300) / (850 - 300);  // 0–1
+  const arcLen  = Math.PI * 120;                  // half-circle circumference
+  const fillLen = arcLen * pct;
+  const deg     = pct * 180 - 90;                 // -90 → +90
+
+  // Animate arc
+  const arc = document.getElementById('gaugeArc');
+  arc.style.strokeDasharray = fillLen + ' ' + arcLen;
+
+  // Animate needle
+  setTimeout(() => {
+    document.getElementById('gaugeNeedle').style.transform = `rotate(${deg}deg)`;
+  }, 200);
+
+  // Animate number counter
+  let n = 300;
+  const target = score;
+  const dur = 1800;
+  const startTime = performance.now();
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / dur, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    n = Math.round(300 + (target - 300) * eased);
+    document.getElementById('gaugeNumber').textContent = n;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // Scale indicator
+  setTimeout(() => {
+    document.getElementById('scaleIndicator').style.left = (pct * 100) + '%';
+  }, 300);
+}
+
+function renderBreakdown(score) {
+  const components = [
+    { label: 'Payment History',    pct: 35, val: Math.round(score * 0.35), color: 'var(--primary)' },
+    { label: 'Income Flow',        pct: 30, val: Math.round(score * 0.30), color: '#00c853bb' },
+    { label: 'Credit Utilisation', pct: 20, val: Math.round(score * 0.20), color: 'var(--warn)' },
+    { label: 'Transaction Volume', pct: 15, val: Math.round(score * 0.15), color: '#2196f3' },
+  ];
+  const maxVal = Math.max(...components.map(c => c.val));
+  document.getElementById('breakdownList').innerHTML = components.map(c => `
+    <li class="breakdown-item">
+      <span class="b-label">${c.label}</span>
+      <div class="b-bar-wrap">
+        <div class="b-bar" style="width:0%;background:${c.color}" data-target="${Math.round(c.val / maxVal * 100)}"></div>
+      </div>
+      <span class="b-val">${c.val}</span>
+      <span class="b-weight">${c.pct}%</span>
+    </li>`).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.b-bar').forEach(bar => {
+      bar.style.width = bar.dataset.target + '%';
+    });
+  }, 400);
+}
+
+function renderFactors(score) {
+  const isGood = score >= 650;
+  const factors = isGood ? [
+    { type:'pos', icon:'✅', title:'Consistent M-Pesa Activity',   desc:'Regular transactions over 90+ days indicate stable financial behaviour.' },
+    { type:'pos', icon:'💰', title:'Strong Income Flow',            desc:'Monthly M-Pesa inflows match or exceed declared income.' },
+    { type:'neu', icon:'⚠️', title:'Moderate Loan History',         desc:'Limited formal credit history. First-time borrower profile.' },
+    { type:'pos', icon:'📈', title:'Low Overdraft Risk',            desc:'No patterns of repeated zero-balance episodes detected.' },
+  ] : [
+    { type:'neg', icon:'❌', title:'Irregular Transaction Patterns', desc:'Gaps in M-Pesa activity suggest income inconsistency.' },
+    { type:'neg', icon:'📉', title:'Low Average Balance',            desc:'Monthly average balance below recommended threshold.' },
+    { type:'neu', icon:'⚠️', title:'High Withdrawal Rate',           desc:'Frequent large withdrawals relative to deposits.' },
+    { type:'neu', icon:'🔄', title:'No Formal Credit History',       desc:'Building formal credit history will improve your score.' },
+  ];
+  document.getElementById('factorGrid').innerHTML = factors.map(f =>
+    `<div class="factor-item ${f.type}">
+      <div class="factor-icon">${f.icon}</div>
+      <div class="factor-title">${f.title}</div>
+      <div class="factor-desc">${f.desc}</div>
+    </div>`).join('');
+}
+
+function renderOffer(score, amount) {
+  if (score < 580) return;
+  const maxAmount = score >= 700 ? amount * 1.2 : amount * 0.8;
+  const months = score >= 700 ? 24 : 12;
+  const rate = 0.11 / 12;
+  const monthly = maxAmount * rate * Math.pow(1+rate,months) / (Math.pow(1+rate,months)-1);
+
+  document.getElementById('offerAmount').textContent = Math.round(maxAmount).toLocaleString();
+  document.getElementById('offerTenure').textContent = months + ' Mo';
+  document.getElementById('offerMonthly').textContent = 'KES ' + Math.round(monthly).toLocaleString();
+  document.getElementById('offerBox').style.display = 'block';
+}
+
+// ── Main Init ──
+async function initScore() {
+  const { score, ref, name, amount } = await getScore();
+  const rating     = getRating(score);
+  const isApproved = score >= 580;
+  const today      = new Date().toLocaleDateString('en-KE', { day:'numeric', month:'short', year:'numeric' });
+
+  document.getElementById('displayRef').textContent    = ref;
+  document.getElementById('applicantName').textContent = name + ' · Score generated ' + today;
+  document.getElementById('statusBadgeWrap').innerHTML = isApproved
+    ? `<div class="result-status-badge approved">Loan Eligible</div>`
+    : `<div class="result-status-badge rejected">Not Eligible at This Time</div>`;
+  document.getElementById('gaugeRating').innerHTML = `<span style="color:${rating.color}">${rating.label}</span>`;
+
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('resultState').style.display  = 'block';
+
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')), 100);
+
+  animateGauge(score);
+  renderBreakdown(score);
+  renderFactors(score);
+  renderOffer(score, amount);
+}
+
+setTimeout(initScore, 2200);
+
+// ── Utilities ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function downloadReport() {
+  showToast('PDF download coming in Phase 5 via backend.');
+}
+
+function shareScore() {
+  if (navigator.share) {
+    navigator.share({ title: 'My TrustLoop Credit Score', text: 'I just got my credit score on TrustLoop!', url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied to clipboard!'));
+  }
+}
+</script>
+</body>
+</html>

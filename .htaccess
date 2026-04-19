@@ -1,0 +1,36 @@
+# TrustLoop Africa — SiteGround Apache config
+Options -Indexes
+
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Clean URLs — serve .html without extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L]
+
+# Proxy /api/* → DigitalOcean Flask (requires mod_proxy on SiteGround)
+# If SiteGround blocks this, API calls go direct from JS (already set in HTML)
+<IfModule mod_proxy.c>
+  RewriteCond %{REQUEST_URI} ^/api/
+  RewriteRule ^api/(.*)$ http://170.64.176.246/api/$1 [P,L]
+  ProxyPassReverse /api/ http://170.64.176.246/api/
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css           "access plus 7 days"
+  ExpiresByType image/svg+xml      "access plus 30 days"
+  ExpiresByType text/javascript    "access plus 7 days"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

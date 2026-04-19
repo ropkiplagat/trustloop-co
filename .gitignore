@@ -1,0 +1,9 @@
+*.zip
+*.log
+.env
+backend/trustloop.db
+uploads/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
