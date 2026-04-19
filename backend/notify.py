@@ -1,9 +1,11 @@
 """
 TrustLoop Notifications
-- SMS: RouteMobile mock (console print) until Abraham provides API key
+- SMS: ConnectBind (RouteMobile) via rslr.connectbind.com:8443
 - Email: Gmail SMTP via rop@targetdigital.com.au
 """
 import os
+import urllib.parse
+import urllib.request
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -11,12 +13,13 @@ from datetime import datetime
 
 # ── Gmail SMTP config ──
 GMAIL_USER     = os.getenv('GMAIL_USER',     'rop@targetdigital.com.au')
-GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD', '')   # set in .env on VPS
+GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD', '')
 
-# ── RouteMobile SMS config (plug in when Abraham provides key) ──
-ROUTEMOBILE_API_KEY  = os.getenv('ROUTEMOBILE_API_KEY', '')
-ROUTEMOBILE_SENDER   = os.getenv('ROUTEMOBILE_SENDER',  'TrustLoop')
-ROUTEMOBILE_BASE     = 'https://api.routemobile.com/sms/2/text/single'
+# ── ConnectBind SMS config ──
+CB_USERNAME = os.getenv('CB_USERNAME', '')          # set in .env
+CB_PASSWORD = os.getenv('CB_PASSWORD', '')          # set in .env
+CB_SENDER   = os.getenv('CB_SENDER',   'TRSTLP')   # max 6 chars alphanumeric
+CB_BASE     = 'https://rslr.connectbind.com:8443/bulksms/bulksms'
 
 
 # ──────────────────────────────────────────────
@@ -24,53 +27,53 @@ ROUTEMOBILE_BASE     = 'https://api.routemobile.com/sms/2/text/single'
 # ──────────────────────────────────────────────
 
 def send_sms(phone: str, message: str) -> bool:
-    """
-    Send SMS via RouteMobile.
-    Falls back to console mock if API key not set.
-    """
-    if not ROUTEMOBILE_API_KEY:
+    """Send SMS via ConnectBind. Falls back to console mock if creds not set."""
+    if not CB_USERNAME or not CB_PASSWORD:
         _mock_sms(phone, message)
         return True
-    return _routemobile_sms(phone, message)
+    return _connectbind_sms(phone, message)
 
 
 def _mock_sms(phone: str, message: str):
-    """Console mock — replace with real API when Abraham sends key."""
     ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"[SMS MOCK] Sent to {phone} at {ts}")
     print(f"[SMS MOCK] Message: {message}")
-    print(f"[SMS MOCK] RouteMobile key not set — plug in ROUTEMOBILE_API_KEY env var")
+    print(f"[SMS MOCK] Set CB_USERNAME + CB_PASSWORD in .env to enable live SMS")
 
 
-def _routemobile_sms(phone: str, message: str) -> bool:
-    """Live RouteMobile API call."""
+def _connectbind_sms(phone: str, message: str) -> bool:
+    """Live ConnectBind SMS via GET request."""
     try:
-        import requests
-        # Normalise to international format for Kenya
-        if phone.startswith('07') or phone.startswith('01'):
-            phone = '+254' + phone[1:]
-        elif phone.startswith('254'):
-            phone = '+' + phone
+        # Normalise to Kenya international format (digits only, no +)
+        phone = phone.replace(' ', '').replace('-', '')
+        if phone.startswith('+'):
+            phone = phone[1:]
+        elif phone.startswith('07') or phone.startswith('01'):
+            phone = '254' + phone[1:]
+        elif not phone.startswith('254'):
+            phone = '254' + phone
 
-        payload = {
-            'from':    ROUTEMOBILE_SENDER,
-            'to':      phone,
-            'text':    message,
-        }
-        resp = requests.post(
-            ROUTEMOBILE_BASE,
-            json=payload,
-            headers={
-                'Authorization': f'App {ROUTEMOBILE_API_KEY}',
-                'Content-Type':  'application/json',
-            },
-            timeout=10
-        )
-        resp.raise_for_status()
-        print(f"[SMS] Sent to {phone} — status {resp.status_code}")
-        return True
+        params = urllib.parse.urlencode({
+            'username':    CB_USERNAME,
+            'password':    CB_PASSWORD,
+            'type':        '0',
+            'dlr':         '1',
+            'destination': phone,
+            'source':      CB_SENDER,
+            'message':     message,
+        })
+        url  = f"{CB_BASE}?{params}"
+        req  = urllib.request.Request(url)
+        resp = urllib.request.urlopen(req, timeout=15)
+        body = resp.read().decode('utf-8', errors='replace').strip()
+        print(f"[SMS] ConnectBind response for {phone}: {body}")
+        # ConnectBind returns '1701' or similar code on success
+        success = body.startswith('1701') or 'success' in body.lower()
+        if not success:
+            print(f"[SMS] Unexpected response: {body}")
+        return success
     except Exception as e:
-        print(f"[SMS] Failed to send to {phone}: {e}")
+        print(f"[SMS] ConnectBind error for {phone}: {e}")
         _mock_sms(phone, message)
         return False
 
