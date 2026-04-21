@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustLoop Africa — Enterprise Credit Intelligence for Banks &amp; Tier 1 SACCOs</title>
+<meta name="description" content="Real-time AI credit scoring API for Kenyan banks, Tier 1 SACCOs, and DFIs. Integrate with T24, Finacle, Bankers Realm, and Flexcube. Comply with CBK, ODPC, and CRB mandates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#2563eb;--blue-dk:#1d4ed8;--bg:#0d1117;--bg2:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--green:#4ade80}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 5%;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--blue),var(--blue-dk));border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.nav-name{font-weight:700;font-size:15px}
+.nav-tag{font-size:10px;color:var(--blue);background:rgba(37,99,235,.15);padding:2px 8px;border-radius:20px;font-weight:600;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--text)}
+.btn-cta{padding:8px 18px;background:var(--blue);color:#fff;border-radius:7px;font-weight:600;font-size:14px;transition:background .2s}
+.btn-cta:hover{background:var(--blue-dk)}
+
+/* SECTIONS */
+section{padding:80px 5%}
+.tag{display:inline-block;background:rgba(37,99,235,.15);color:var(--blue);font-size:12px;font-weight:600;letter-spacing:.8px;padding:4px 12px;border-radius:20px;margin-bottom:20px;text-transform:uppercase}
+
+/* HERO */
+.hero{padding:100px 5% 80px;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(37,99,235,.18),transparent)}
+.hero h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.2;max-width:800px;margin:0 auto 20px;letter-spacing:-.5px}
+.hero h1 span{color:var(--blue)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);max-width:620px;margin:0 auto 40px}
+.hero-badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.hero-badge{background:var(--bg2);border:1px solid var(--border);padding:8px 16px;border-radius:8px;font-size:13px;color:var(--muted)}
+.hero-badge strong{color:var(--text)}
+.btn-hero{display:inline-block;padding:14px 32px;background:var(--blue);color:#fff;border-radius:8px;font-weight:700;font-size:16px;margin-right:12px;transition:background .2s}
+.btn-hero:hover{background:var(--blue-dk)}
+.btn-outline{display:inline-block;padding:14px 32px;border:1px solid var(--border);border-radius:8px;font-weight:600;font-size:16px;color:var(--text)}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.pillar{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px}
+.pillar-icon{width:44px;height:44px;background:rgba(37,99,235,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.pillar h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.pillar p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* INTEGRATIONS */
+.integrations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:32px}
+.integration{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;font-size:13px;font-weight:600;color:var(--muted)}
+.integration:hover{border-color:var(--blue);color:var(--text)}
+
+/* TIERS */
+.tiers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.tier-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.tier-card.featured{border-color:var(--blue)}
+.tier-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--blue);text-transform:uppercase;margin-bottom:10px}
+.tier-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.tier-examples{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.tier-price{font-size:18px;font-weight:700;color:var(--text)}
+.tier-price span{font-size:12px;color:var(--muted);font-weight:400}
+
+/* COMPLIANCE */
+.compliance-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.compliance-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px}
+.compliance-icon{font-size:20px;flex-shrink:0}
+.compliance-item h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.compliance-item p{font-size:12px;color:var(--muted)}
+
+/* RFP FORM */
+.rfp-wrap{max-width:700px;margin:0 auto}
+.rfp-wrap h2{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:10px}
+.rfp-wrap p{color:var(--muted);font-size:15px;margin-bottom:32px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}.nav-links{display:none}}
+.field{margin-bottom:18px}
+label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+select option{background:var(--bg2)}
+textarea{resize:vertical;min-height:90px}
+.btn-submit{padding:14px 32px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s}
+.btn-submit:hover{background:var(--blue-dk)}
+.btn-submit:disabled{background:var(--border);cursor:not-allowed}
+.form-note{font-size:12px;color:var(--muted);margin-top:12px}
+.success-msg{background:#14532d;border:1px solid #166534;color:#4ade80;padding:16px;border-radius:8px;font-size:14px;display:none;margin-top:16px}
+.err-msg{background:#2d1f1f;border:1px solid #6b1a1a;color:#f87171;padding:16px;border-radius:8px;font-size:14px;display:none;margin-top:16px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:32px 5%;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-mark">TL</div>
+    <span class="nav-name">TrustLoop Africa</span>
+    <span class="nav-tag">ENTERPRISE</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="#pillars">Platform</a>
+    <a href="#integrations">Integrations</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#rfp" class="btn-cta">Request API Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tag">Tier 1 &amp; 2 Enterprise</div>
+  <h1>Credit Intelligence for<br><span>Kenya's Banks and SACCOs</span></h1>
+  <p class="hero-sub">Real-time AI credit scoring API that integrates with your core banking system. Decisions in seconds, not days. Built for CBK compliance.</p>
+  <div class="hero-badges">
+    <div class="hero-badge"><strong>T24</strong> compatible</div>
+    <div class="hero-badge"><strong>Finacle</strong> compatible</div>
+    <div class="hero-badge"><strong>Bankers Realm</strong> compatible</div>
+    <div class="hero-badge"><strong>Flexcube</strong> compatible</div>
+    <div class="hero-badge"><strong>CBK</strong> compliant</div>
+    <div class="hero-badge"><strong>ODPC</strong> registered</div>
+  </div>
+  <a href="#rfp" class="btn-hero">Request API Access</a>
+  <a href="#pillars" class="btn-outline">See how it works</a>
+</div>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="tag">Platform</div>
+  <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:10px">Three pillars of enterprise credit intelligence</h2>
+  <p style="color:var(--muted);max-width:600px;margin-bottom:40px;font-size:15px">Designed for institutions processing 50+ loan decisions per day, with audit trails, SLA guarantees, and CBK-compliant data handling.</p>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-icon">⚡</div>
+      <h3>Real-Time Scoring API</h3>
+      <p>REST API returns a credit score in &lt;2 seconds. Integrates via webhook or direct API call into your loan origination system. SLA: 99.5% uptime, &lt;3s p99 response.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">📊</div>
+      <h3>CRB + M-Pesa Intelligence</h3>
+      <p>Combines Metropol/TransUnion CRB data with M-Pesa transaction history, employer payslips, and KRA PIN verification — the full Kenyan credit picture in one score.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🛡️</div>
+      <h3>Compliance &amp; Audit</h3>
+      <p>Every score is logged with an immutable audit trail. ODPC-registered data processor. CBK AMLA-aware. GDPR-equivalent data residency in Nairobi. Export-ready for CBK reporting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section id="integrations" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="tag">Integrations</div>
+  <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:10px">Works with your existing core banking system</h2>
+  <p style="color:var(--muted);max-width:600px;font-size:15px">Plug in via REST API — no bespoke integration required. Standard JSON payloads with OAuth2. Sandbox environment available day one.</p>
+  <div class="integrations-grid">
+    <div class="integration">T24 (Temenos)</div>
+    <div class="integration">Finacle (Infosys)</div>
+    <div class="integration">Bankers Realm</div>
+    <div class="integration">Oracle Flexcube</div>
+    <div class="integration">Mambu</div>
+    <div class="integration">Craft Silicon</div>
+    <div class="integration">Metropol CRB</div>
+    <div class="integration">TransUnion CRB</div>
+    <div class="integration">M-Pesa Daraja</div>
+    <div class="integration">Safaricom Data</div>
+    <div class="integration">KRA iTax</div>
+    <div class="integration">NHIF / NSSF</div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="tag">Pricing</div>
+  <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:10px">Transparent pricing, no surprises</h2>
+  <p style="color:var(--muted);max-width:600px;margin-bottom:40px;font-size:15px">Volume-based pricing for institutions. All tiers include SLA, audit trail, and dedicated onboarding.</p>
+  <div class="tiers-grid">
+    <div class="tier-card">
+      <div class="tier-num">Tier 2 SACCOs</div>
+      <h3>SACCO Enterprise</h3>
+      <p class="tier-examples">Mwalimu, Stima, Kenya Police, Unaitas, Family Bank</p>
+      <div class="tier-price">KES 10K–50K<span>/month</span></div>
+    </div>
+    <div class="tier-card featured">
+      <div class="tier-num">Tier 1 Banks</div>
+      <h3>Bank Enterprise</h3>
+      <p class="tier-examples">KCB, Equity, NCBA, Co-op, DTB, Absa, Stanbic</p>
+      <div class="tier-price">KES 50K–500K<span>/month</span></div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-num">DFIs &amp; Development</div>
+      <h3>Custom</h3>
+      <p class="tier-examples">AfDB, IFC, FSD Kenya, Development banks</p>
+      <div class="tier-price">Custom<span> — contact us</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="tag">Compliance</div>
+  <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:36px">Built for Kenya's regulatory environment</h2>
+  <div class="compliance-grid">
+    <div class="compliance-item">
+      <div class="compliance-icon">🏛️</div>
+      <div><h4>CBK Compliant</h4><p>Scores meet CBK prudential guidelines for retail and institutional lending.</p></div>
+    </div>
+    <div class="compliance-item">
+      <div class="compliance-icon">🔒</div>
+      <div><h4>ODPC Registered</h4><p>Data Processing Agreement ready. Full ODPC registration for institutional clients.</p></div>
+    </div>
+    <div class="compliance-item">
+      <div class="compliance-icon">📋</div>
+      <div><h4>CRB Act Aligned</h4><p>Credit scoring methodology reviewed against Kenya's Credit Reference Bureau regulations.</p></div>
+    </div>
+    <div class="compliance-item">
+      <div class="compliance-icon">🗄️</div>
+      <div><h4>Data Residency</h4><p>All data stored in Nairobi. No cross-border transfer without consent.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RFP FORM -->
+<section id="rfp">
+  <div class="rfp-wrap">
+    <div class="tag">Get Started</div>
+    <h2>Request API Access</h2>
+    <p>Fill out the form below. Our team will contact you within 48 hours to schedule a demo and provision your sandbox environment.</p>
+    <div class="form-row">
+      <div class="field">
+        <label>Full Name *</label>
+        <input type="text" id="r-name" placeholder="Jane Mutua">
+      </div>
+      <div class="field">
+        <label>Institution *</label>
+        <input type="text" id="r-inst" placeholder="KCB Bank Kenya">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label>Work Email *</label>
+        <input type="email" id="r-email" placeholder="jane@kcbgroup.com">
+      </div>
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" id="r-phone" placeholder="+254 700 000 000">
+      </div>
+    </div>
+    <div class="field">
+      <label>Institution Type *</label>
+      <select id="r-tier">
+        <option value="">Select…</option>
+        <option value="Tier 1 Bank">Tier 1 Bank (KCB, Equity, NCBA, Co-op, DTB, Absa, Stanbic)</option>
+        <option value="Tier 2 SACCO">Tier 2 SACCO (Mwalimu, Stima, Kenya Police, Unaitas)</option>
+        <option value="DFI">Development Finance Institution (AfDB, IFC, FSD Kenya)</option>
+        <option value="Insurance">Insurance / Bancassurance</option>
+        <option value="Other">Other — specify below</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Monthly loan decisions (approximate)</label>
+      <select id="r-volume">
+        <option value="">Select range…</option>
+        <option value="<500">&lt; 500/month</option>
+        <option value="500-2000">500–2,000/month</option>
+        <option value="2000-10000">2,000–10,000/month</option>
+        <option value="10000+">10,000+/month</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Use case / notes</label>
+      <textarea id="r-use" placeholder="e.g. We want to automate M-Pesa statement scoring for SME loans under KES 500K…"></textarea>
+    </div>
+    <button class="btn-submit" id="rfp-btn" onclick="submitRFP()">Request API Access</button>
+    <p class="form-note">No spam. Your data is used solely to contact you about TrustLoop enterprise access.</p>
+    <div class="success-msg" id="rfp-ok">✓ Request received. Our team will contact you within 48 hours to arrange a demo.</div>
+    <div class="err-msg" id="rfp-err"></div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 TrustLoop Co. Nairobi, Kenya.</div>
+  <div style="display:flex;gap:20px">
+    <a href="index.html">Home</a>
+    <a href="for-saccos.html">For SACCOs</a>
+    <a href="for-lenders.html">For Lenders</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+</footer>
+
+<script>
+const API = 'http://170.64.176.246:5001';
+
+async function submitRFP() {
+  const btn = document.getElementById('rfp-btn');
+  const ok  = document.getElementById('rfp-ok');
+  const err = document.getElementById('rfp-err');
+  ok.style.display = err.style.display = 'none';
+
+  const payload = {
+    name:           document.getElementById('r-name').value.trim(),
+    institution:    document.getElementById('r-inst').value.trim(),
+    email:          document.getElementById('r-email').value.trim(),
+    phone:          document.getElementById('r-phone').value.trim(),
+    tier:           document.getElementById('r-tier').value,
+    monthly_volume: document.getElementById('r-volume').value,
+    use_case:       document.getElementById('r-use').value.trim(),
+  };
+
+  if (!payload.name || !payload.institution || !payload.email || !payload.tier) {
+    err.textContent = 'Please fill in all required fields.';
+    err.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+  try {
+    const res = await fetch(`${API}/api/rfp`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      ok.style.display = 'block';
+      btn.textContent = 'Submitted ✓';
+    } else {
+      const d = await res.json();
+      err.textContent = d.error || 'Submission failed — please email info@trustloopafrica.com';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Request API Access';
+    }
+  } catch(e) {
+    err.textContent = 'Network error — please email info@trustloopafrica.com directly';
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Request API Access';
+  }
+}
+</script>
+</body>
+</html>

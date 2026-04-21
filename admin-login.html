@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustLoop Admin — Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:40px;width:100%;max-width:380px}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:32px}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,#2563eb,#1d4ed8);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff}
+.logo-text{font-size:16px;font-weight:600;color:#e6edf3}
+.logo-sub{font-size:11px;color:#8b949e;margin-top:1px}
+h1{font-size:20px;font-weight:600;margin-bottom:6px}
+.sub{color:#8b949e;font-size:14px;margin-bottom:28px}
+label{display:block;font-size:13px;font-weight:500;color:#8b949e;margin-bottom:6px}
+input{width:100%;padding:10px 14px;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border .2s}
+input:focus{border-color:#2563eb}
+.field{margin-bottom:18px}
+.btn{width:100%;padding:12px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;margin-top:8px}
+.btn:hover{background:#1d4ed8}
+.btn:disabled{background:#30363d;cursor:not-allowed}
+.err{background:#2d1f1f;border:1px solid #6b1a1a;color:#f87171;padding:10px 14px;border-radius:8px;font-size:13px;margin-top:16px;display:none}
+.note{font-size:11px;color:#8b949e;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-mark">TL</div>
+    <div>
+      <div class="logo-text">TrustLoop Africa</div>
+      <div class="logo-sub">Admin Portal</div>
+    </div>
+  </div>
+  <h1>Sign in</h1>
+  <p class="sub">Restricted access — authorised personnel only</p>
+  <div class="field">
+    <label for="pw">Password</label>
+    <input type="password" id="pw" placeholder="Enter admin password" autocomplete="current-password">
+  </div>
+  <button class="btn" id="btn" onclick="login()">Sign in</button>
+  <div class="err" id="err"></div>
+  <p class="note">Session expires after 8 hours</p>
+</div>
+<script>
+const API = 'http://170.64.176.246:5001';
+
+document.getElementById('pw').addEventListener('keydown', e => {
+  if (e.key === 'Enter') login();
+});
+
+async function login() {
+  const pw  = document.getElementById('pw').value;
+  const btn = document.getElementById('btn');
+  const err = document.getElementById('err');
+  err.style.display = 'none';
+  if (!pw) { showErr('Enter password'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  try {
+    const res = await fetch(`${API}/api/admin/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({password: pw})
+    });
+    const data = await res.json();
+    if (!res.ok) { showErr(data.error || 'Login failed'); return; }
+    localStorage.setItem('tl_admin_token', data.token);
+    window.location.href = 'admin.html';
+  } catch(e) {
+    showErr('Cannot reach server — check connection');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+  }
+}
+
+function showErr(msg) {
+  const el = document.getElementById('err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+</script>
+</body>
+</html>

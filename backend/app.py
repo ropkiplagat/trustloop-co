@@ -1,6 +1,6 @@
 """
 TrustLoop Flask API
-Serves: borrower intake, score retrieval, admin dashboard data, CSV export
+Serves: borrower intake, score retrieval, admin dashboard, Daraja stub, enterprise RFP
 """
 import os
 import json
@@ -14,10 +14,12 @@ from flask import (
 from werkzeug.utils import secure_filename
 
 # ── Local modules ──
-from db      import init_db, insert_application, update_score, update_status, get_application, list_applications
-from parser  import parse_mpesa_pdf
-from scorer  import compute_score
-from notify  import notify_submission, notify_score_ready
+from db            import init_db, insert_application, update_score, update_status, get_application, list_applications
+from parser        import parse_mpesa_pdf
+from scorer        import compute_score, provider_status
+from notify        import notify_submission, notify_score_ready
+from auth          import check_password, make_token, verify_token, token_from_request
+from daraja_client import DarajaClient
 
 # ── App setup ──
 BASE_DIR    = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -273,10 +275,107 @@ def export_csv():
 @app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({
-        'status': 'ok',
-        'app':    'TrustLoop',
-        'time':   datetime.now().isoformat(),
+        'status':   'ok',
+        'app':      'TrustLoop',
+        'time':     datetime.now().isoformat(),
+        'scorer':   os.getenv('SCORER_PROVIDER', 'mock'),
+        'providers': provider_status(),
     })
+
+
+# ──────────────────────────────────────────────
+# Admin auth + protected routes (Stream 5)
+# ──────────────────────────────────────────────
+
+@app.route('/api/admin/login', methods=['POST', 'OPTIONS'])
+def admin_login():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    body     = request.get_json(force=True) or {}
+    password = body.get('password', '')
+    if not check_password(password):
+        return jsonify({'error': 'Invalid credentials'}), 401
+    token = make_token()
+    return jsonify({'token': token, 'expires_in': 28800})
+
+
+@app.route('/api/admin/applications', methods=['GET', 'OPTIONS'])
+def admin_applications():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    token = token_from_request(request)
+    if not token or not verify_token(token):
+        return jsonify({'error': 'Unauthorized'}), 401
+    status = request.args.get('status')
+    limit  = int(request.args.get('limit', 500))
+    rows   = list_applications(status=status, limit=limit)
+    for r in rows:
+        r.pop('pdf_path', None)
+    return jsonify({'applications': rows, 'count': len(rows)})
+
+
+# ──────────────────────────────────────────────
+# Daraja M-Pesa stub (Stream 4)
+# ──────────────────────────────────────────────
+
+@app.route('/api/daraja/status', methods=['GET'])
+def daraja_status():
+    client = DarajaClient()
+    return jsonify({
+        'ready': client.is_ready(),
+        'env':   os.getenv('DARAJA_ENV', 'sandbox'),
+    })
+
+
+@app.route('/api/daraja/callback', methods=['POST', 'OPTIONS'])
+def daraja_callback():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    payload = request.get_json(force=True) or {}
+    result  = DarajaClient().process_callback(payload)
+    print(f'[DARAJA] Callback received: {result}')
+    return jsonify({'ResultCode': 0, 'ResultDesc': 'Accepted'}), 200
+
+
+# ──────────────────────────────────────────────
+# Enterprise RFP form handler (Stream 6)
+# ──────────────────────────────────────────────
+
+@app.route('/api/rfp', methods=['POST', 'OPTIONS'])
+def rfp_submit():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    body = request.get_json(force=True) or {}
+    required = ['name', 'institution', 'email', 'tier']
+    missing  = [f for f in required if not body.get(f)]
+    if missing:
+        return jsonify({'error': f'Missing: {", ".join(missing)}'}), 400
+
+    entry = {
+        'name':        body.get('name', '').strip(),
+        'institution': body.get('institution', '').strip(),
+        'email':       body.get('email', '').strip(),
+        'phone':       body.get('phone', '').strip(),
+        'tier':        body.get('tier', '').strip(),
+        'use_case':    body.get('use_case', '').strip(),
+        'volume':      body.get('monthly_volume', '').strip(),
+        'submitted_at': datetime.now().isoformat(),
+    }
+
+    rfp_log = os.path.join(BASE_DIR, 'rfp_submissions.json')
+    submissions = []
+    if os.path.exists(rfp_log):
+        try:
+            with open(rfp_log) as f:
+                submissions = json.load(f)
+        except Exception:
+            pass
+    submissions.append(entry)
+    with open(rfp_log, 'w') as f:
+        json.dump(submissions, f, indent=2)
+
+    print(f'[RFP] New submission from {entry["institution"]} ({entry["email"]})')
+    return jsonify({'status': 'received', 'message': 'Thank you. Our team will contact you within 48 hours.'}), 201
 
 
 # ──────────────────────────────────────────────
